@@ -27,7 +27,7 @@ const Header = () => {
               </div>
               <div className="logo-heading-container">
                 <img src={img1} alt="Logo" className="logo" />
-                <h2 style={{paddingTop: '20px'}}> Karnataka Election Results of 2023</h2>
+                <h2 style={{paddingTop: '20px'}}> Karnataka 2023 Election results</h2>
               </div>
             </div>
             {/* <hr className="heading-line" /> */}
