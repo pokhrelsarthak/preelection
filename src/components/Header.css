@@ -1,0 +1,122 @@
+.header-container {
+  background-color:palevioletred;
+}
+
+.header-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top:20px;
+
+}
+
+.logo-heading-container {
+  display: flex;
+  align-items: center;
+  top: 20px;
+}
+
+.logo {
+  width: 60px; /* Adjust the width as needed
+   height: 40px; Maintain the aspect ratio */
+  margin-right: 20px;
+  margin-top:20px;
+  /* Add spacing between the logo and heading */
+}
+
+
+.hamburger-container {
+  font-size:25px;
+  position: absolute;
+  top: 30px;
+  left: 10px;
+  width: 20px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.hamburger {
+  width:300px;
+  height: 15px;
+  background-color: #000;
+  border-radius: 30px;
+  transition: transform 0.3s;
+}
+
+.open {
+  transform: rotate(45deg);
+}
+
+.menu {
+  position: absolute;
+  top: 70px;
+  left: 10px;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #000;
+  z-index: 2;
+}
+
+.menu ul {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0;
+  margin: 0;
+}
+
+.menu ul li {
+  list-style-type: none;
+  margin-bottom: 10px; /* Add spacing between the buttons */
+}
+.header-container {
+  position: relative;
+}
+
+.dropdown-container {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+}
+
+.dropdown-button {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: #000;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+/* Adjust the styling of dropdown menu items as needed */
+.dropdown-menu ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.dropdown-menu li {
+  padding: 5px 10px;
+}
+
+/* Add hover effect for dropdown items */
+.dropdown-menu li:hover {
+  background-color: #f0f0f0;
+}
+
+
+
+/* Add more styles to customize the menu as needed */
