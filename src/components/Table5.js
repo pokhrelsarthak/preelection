@@ -11,7 +11,6 @@ import Reports from "./Reports"
 
 const Table5 = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  // const history = useHistory();
   const [selectedRange, setSelectedRange] = useState("1-100");
   const[display,setDisplay] = useState(true);
 
@@ -20,7 +19,6 @@ const Table5 = () => {
   };
 
   const handleBack = () => {
-    // history.goBack();
     setDisplay(true);
   };
 
@@ -31,91 +29,91 @@ const Table5 = () => {
 
   return (
     <>
-      {/* <div className="back-container"> */}
       <Link to="/reports">
         <button className="btn btn-secondary" onClick={handleBack}>
           Back
         </button>
       </Link>
+      <div className="range-text">Select Margin Range: </div>
       <Router>
-            <div className="dropdown-container">
-              <div className="dropdown">
+        <div className="dropdown-container">
+          <div className="dropdown">
+            <button
+              className="nav-link btn dropdown-toggle rounded-button"
+              id="navbarDropdown"
+              aria-haspopup="true"
+              aria-expanded={isDropdownOpen}
+              onClick={toggleDropdown}
+            >
+              {selectedRange ? selectedRange : "Dropdown"}
+            </button>
+            {isDropdownOpen && (
+              <div className="dropdown-menu dropdown-menu-right show" aria-labelledby="navbarDropdown">
+                  <Link to="/range1">
                 <button
-                  className="nav-link btn  dropdown-toggle"
-                  id="navbarDropdown"
-                  aria-haspopup="true"
-                  aria-expanded={isDropdownOpen}
-                  onClick={toggleDropdown}
+                  onClick={() => {handleRangeSelection("1-100");
+                                  setDisplay(false);
+                                }}
+                  className="dropdown-item"
                 >
-                  {selectedRange ? selectedRange : "Dropdown"}
+                  <center>1-100</center>
                 </button>
-                {isDropdownOpen && (
-                  <div className="dropdown-menu dropdown-menu-right show" aria-labelledby="navbarDropdown">
-                      <Link to="/range1">
-                    <button
-                      onClick={() => {handleRangeSelection("1-100");
-                                      setDisplay(false);
-                                    }}
-                      className="dropdown-item"
-                    >
-                      1-100
-                    </button>
-                    </Link>
+                </Link>
 
-                    <Link to="/range2">
-                    <button
-                      onClick={() => {handleRangeSelection("100-1000");
-                      setDisplay(false);
-                    }}
-                      className="dropdown-item"
-                    >
-                      100-1000
-                    </button>
-                    </Link>
-                    <Link to="/range3">
-                    <button
-                      onClick={() => {handleRangeSelection("1000-10000");
-                      setDisplay(false);
-                    }}
-                      className="dropdown-item"
-                    >
-                      1000-10000
-                    </button>
-                    </Link>
-                    <Link to="/range4">
-                    <button
-                      onClick={() => {handleRangeSelection("10000-50000");
-                      setDisplay(false);
-                    }}
-                      className="dropdown-item"
-                    >
-                      10000-50000
-                    </button>
-                    </Link>
-                    <Link to="/range5">
-                    <button
-                      onClick={() => {handleRangeSelection("50000-100000");
-                      setDisplay(false);
-                    }}
-                      className="dropdown-item"
-                    >
-                      50000-100000
-                    </button>
-                    </Link>
-                    <Link to="/range6">
-                    <button
-                      onClick={() => {handleRangeSelection("100000 and above");
-                      setDisplay(false);
-                    }}
-                      className="dropdown-item"
-                    >
-                      100000 and above
-                    </button>
-                    </Link>
-                  </div>
-                )}
+                <Link to="/range2">
+                <button
+                  onClick={() => {handleRangeSelection("100-1000");
+                  setDisplay(false);
+                }}
+                  className="dropdown-item"
+                >
+                  <center>100-1000</center>
+                </button>
+                </Link>
+                <Link to="/range3">
+                <button
+                  onClick={() => {handleRangeSelection("1000-10000");
+                  setDisplay(false);
+                }}
+                  className="dropdown-item"
+                >
+                  <center>1000-10000</center>
+                </button>
+                </Link>
+                <Link to="/range4">
+                <button
+                  onClick={() => {handleRangeSelection("10000-50000");
+                  setDisplay(false);
+                }}
+                  className="dropdown-item"
+                >
+                  <center>10000-50000</center>
+                </button>
+                </Link>
+                <Link to="/range5">
+                <button
+                  onClick={() => {handleRangeSelection("50000-100000");
+                  setDisplay(false);
+                }}
+                  className="dropdown-item"
+                >
+                  <center>50000-100000</center>
+                </button>
+                </Link>
+                <Link to="/range6">
+                <button
+                  onClick={() => {handleRangeSelection("100000 and above");
+                  setDisplay(false);
+                }}
+                  className="dropdown-item"
+                >
+                  <center>100000 and above</center>
+                </button>
+                </Link>
               </div>
-            </div>
+            )}
+          </div>
+        </div>
         {display ? (
           <Range1/>
         ):(<div></div>)}
@@ -150,21 +148,3 @@ const Table5 = () => {
 };
 
 export default Table5;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

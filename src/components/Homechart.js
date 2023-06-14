@@ -40,17 +40,6 @@ const renderActiveShape = (props) => {
             <text x={cx} y={cy+17} dy={8} textAnchor="middle" fill={fill}>
                 {`(`+shortform+`)`}
             </text>
-            {/* <text x={cx} y={cy + 17} dy={8} textAnchor="middle" fill={fill}>
-                <tspan x={cx} dy="1em">
-                    {shortform.length > maxLength ? shortform.slice(0, maxLength) : shortform}
-                </tspan>
-                {shortform.length > maxLength && (
-                    <tspan x={cx} dy="1em">
-                    {shortform.slice(maxLength)}
-                    </tspan>
-                )}
-            </text> */}
-
 
             <Sector
                 cx={cx}
@@ -161,7 +150,7 @@ export default function Homechart() {
                         name: 'OTHERS',
                         value: othervotcnt,
                         fill: '#800080',
-                        shortform:otherpname
+                        shortform: '3 parties'
                     });
 
                 console.log(ranges3);

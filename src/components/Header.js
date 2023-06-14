@@ -1,55 +1,53 @@
-import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
-import {  useLocation } from "react-router-dom";
+import React,{useState,useEffect} from "react";
 import { Link } from 'react-router-dom';
 import "./Header.css";
 import img1 from "./img1.png";
+import Cabinet from "./Cabinet";
 
-const Header = () => {
-  const location = useLocation();
-  const [isMenuOpen, setMenuOpen] = useState(false);
+const Header = (props) => {
+  const [isMenuOpen, setMenuOpen] = useState(true);
 
-  const toggleMenu = () => {
-    setMenuOpen(!isMenuOpen);
-  };
-
-  const shouldRenderMenu = location.pathname === "/home";
-
+  useEffect(() => {
+    setMenuOpen(props.render);
+  }, [props.render]);
   return (
     <>
       <nav className="header-container">
         <div className="Container center">
           <div className="ui fixed">
             <div className="header-content">
-              <div className="hamburger-container" onClick={toggleMenu} disabled={!shouldRenderMenu}>
-                <FontAwesomeIcon icon={faBars} />
-              </div>
               <div className="logo-heading-container">
-                <img src={img1} alt="Logo" className="logo" />
+                <img style={{marginTop:'5px'}} src={img1} alt="Logo" className="logo" />
                 <h2 style={{paddingTop: '20px'}}> Karnataka 2023 Election results</h2>
               </div>
             </div>
-            {/* <hr className="heading-line" /> */}
           </div>
         </div>
       </nav>
-      {isMenuOpen && shouldRenderMenu && (
-        <div className="menu">
-          {/* Add your menu items here */}
-          <ul>
-            <li>
+
+      {isMenuOpen &&(
+        <nav>
+          <div className="Container center">
+          <div className="ui fixed">
+            <div id="id1" className="header-content" style={{ display: "flex", justifyContent: "space-around",paddingTop:"10px",paddingBottom:'10px' }}>
+              <Link to="home">
+                <button className="btn btn-warning">Home</button>
+              </Link>
               <Link to="charts">
-              <button className="btn btn-warning">Charts</button>
+                <button className="btn btn-warning">Charts</button>
               </Link>
-            </li>
-            <li>
-            <Link to="reports">
-              <button className="btn btn-warning">Reports</button>
+              <Link to="reports">
+                <button className="btn btn-warning">Reports</button>
               </Link>
-            </li>
-          </ul>
+              <Link to="cabi">
+              <button className="btn btn-warning" style={{ whiteSpace: "nowrap", width: "auto" }}>
+                Cabinet Ministers
+              </button>
+              </Link>
+            </div>
+          </div>
         </div>
+      </nav>
       )}
     </>
   );

@@ -52,37 +52,41 @@ export default function Range4() {
     <div>
       <center>
         <br/>
-        <h1 >Constituency won with margin Range 10000-50000 ({count} {count > 1 ? ('candidates'):('candidate')}) </h1>
+        <h1 >Constituency won with margin Range 10000-50000</h1>
+        <h2 style={{ marginTop: '0.2rem' }}>({count} {count > 1 ? 'candidates' : 'candidate'})</h2>
         {isLoading ? ( // Render loading button if isLoading is true
           // <button disabled>Loading...</button>
           <FontAwesomeIcon icon={faSpinner} spin size="3x" /> // Display loader icon while loading
         ) : (
         <range4 style={range4Style}>
         <thead>
-          <tr>
-            <th style={range4HeaderStyle}>Sno</th>
-            <th style={range4HeaderStyle}>Constituency Key</th>
-            <th style={range4HeaderStyle}>Constituency Name</th>
-            <th style={range4HeaderStyle}>Candidate Name</th>
-            <th style={range4HeaderStyle}>Party Name</th>
-            <th style={range4HeaderStyle}>Total Votes</th>
-            <th style={range4HeaderStyle}>Margin</th>
-          
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((data,index) => (
-            <tr key={data.sno}>
-              <td style={range4CellStyle}>{index+1}</td>
-              <td style={range4CellStyle}>{data.constkey}</td>
-              <td style={range4CellStyle}>{data.constname}</td>
-              <td style={range4CellStyle}>{data.cname}</td>
-              <td style={range4CellStyle}>{data.pname}</td>
-              <td style={range4CellStyle}>{data.totvotes}</td>
-              <td style={range4CellStyle}>{data.difference}</td>
-            </tr>
-          ))}
-        </tbody>
+              <tr>
+                <th style={range4HeaderStyle}>Sno</th>
+                <th style={range4HeaderStyle}>Constituency Key</th>
+                <th style={range4HeaderStyle}>Constituency Name</th>
+                <th style={range4HeaderStyle}>Party Name</th>
+                <th style={range4HeaderStyle}>Winner</th>
+                <th style={range4HeaderStyle}>Runner</th>
+                <th style={range4HeaderStyle}>Total Votes</th>
+                <th style={range4HeaderStyle}>Difference</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.map((rowData, index) => (
+                <tr key={rowData.sno}>
+                  <td style={range4CellStyle}>{index + 1}</td>
+                  <td style={range4CellStyle}>{rowData.constkey}</td>
+                  <td style={range4CellStyle}>{rowData.constname}</td>
+                  <td style={range4CellStyle}>{rowData.pname}</td>
+                  <td style={range4CellStyle}>{rowData.winner}</td>
+                  <td style={range4CellStyle}>{rowData.runner}</td>
+                  <td style={range4CellStyle}>{rowData.totvotes}</td>
+                  <td style={range4CellStyle}>{rowData.difference}</td>
+                </tr>
+                
+              )
+              )}
+            </tbody>
       </range4>
     )}
   </center>

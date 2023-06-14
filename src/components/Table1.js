@@ -82,7 +82,7 @@ export default function Table1() {
           {data.map((data,index) => (
             <tr key={data.sno}>
               <td style={table1CellStyle}>{index+1}</td>
-              <td style={table1CellStyle}>{data.cname}</td>
+              <td style={table1CellStyle}>{data.winner}</td>
               <td style={table1CellStyle}>{data.constname}</td>
               <td style={table1CellStyle}>{data.constkey}</td>
               <td style={table1CellStyle}>{data.totvotes}</td>

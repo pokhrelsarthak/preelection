@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React,{useState} from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Header from "./components/Header";
-import Home from "./components/home"; // Import the Home component
+import Home from "./components/home";
 import Charts from "./components/Charts";
 import Reports from "./components/Reports"
 import Table1 from "./components/Table1";
@@ -11,52 +11,51 @@ import Table2 from './components/Table2';
 import Table3 from "./components/Table3";
 import Table4 from "./components/Table4";
 import Table5 from "./components/Table5";
+import Cabinet from "./components/Cabinet";
 
 function App() {
-  const [signupData, setSignupData] = useState([]);
-
-  const handleSignup = (data) => {
-    setSignupData([...signupData, data]);
-    console.log('Signupdata:', signupData);
-  };
-
+  const [render, setRender] = useState(false);
+  const [show, setShow] = useState(true);
   return (
     <Router>
-      <Header />
+      <Header render={render}/>
       <div>
         <Switch>
           <Route path="/signup">
-            <Signup handleSignup={handleSignup} />
+            <Signup setRender={setRender}/>
           </Route>
           <Route exact path="/">
-            <Login />
+            <Login setRender={setRender} />
           </Route>
           <Route path="/home">
-            <Home />
+            <Home setRender={setRender}/>
           </Route>
           <Route path="/Login">
-            <Login signupData={signupData} />
+            <Login setRender={setRender}/>
           </Route>
           <Route path="/charts">
-            <Charts />
+            <Charts setRender={setRender}/>
           </Route>
           <Route path="/reports">
-            <Reports />
+            <Reports setRender={setRender}/>
+          </Route>
+          <Route path="/cabi">
+            <Cabinet setRender={setRender}/>
           </Route>
           <Route path="/table1">
-            <Table1 />
+            <Table1 setRender={setRender}/>
           </Route>
           <Route path="/table2">
-            <Table2 />
+            <Table2 setRender={setRender}/>
           </Route>
           <Route exact path="/table3">
-            <Table3 />
+            <Table3 setRender={setRender}/>
           </Route>
           <Route exact path="/table4">
-            <Table4 />
+            <Table4 setRender={setRender}/>
           </Route>
           <Route exact path="/table5">
-            <Table5 />
+            <Table5 setRender={setRender}/>
           </Route>
         </Switch>
       </div>
@@ -65,42 +64,3 @@ function App() {
 }
 
 export default App;
-
-
-// import React, { useState } from "react";
-// import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
-// import Login from "./components/Login";
-// import Signup from "./components/Signup";
-// import Header from "./components/Header";
-// import Home from "./components/home";
-
-// function App() {
-//   const [signupData, setSignupData] = useState([]);
-
-//   const handleSignup = (data) => {
-//     setSignupData([...signupData, data]);
-//     console.log('Signupdata:', signupData);
-//   };
-
-//   return (
-//     <Router>
-//       <Header />
-//       <div>
-//         <Switch>
-//           <Route path="/signup">
-//             <Signup handleSignup={handleSignup} />
-//           </Route>
-//           <Route exact path="/">
-//             <Login />
-//           </Route>
-//           <Route path="/home">
-//             <Home />
-//           </Route>
-//           <Redirect to="/home" /> {/* Add a redirect route to handle unknown routes */}
-//         </Switch>
-//       </div>
-//     </Router>
-//   );
-// }
-
-// export default App;

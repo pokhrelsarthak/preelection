@@ -1,13 +1,16 @@
 .header-container {
   background-color:palevioletred;
 }
+#id1{
+  background-color:#ebb4c3;
+  top:20px;
+}
 
 .header-content {
   display: flex;
   justify-content: center;
   align-items: center;
   top:20px;
-
 }
 
 .logo-heading-container {
@@ -25,7 +28,7 @@
 }
 
 
-.hamburger-container {
+/* .hamburger-container {
   font-size:25px;
   position: absolute;
   top: 30px;
@@ -45,7 +48,7 @@
   background-color: #000;
   border-radius: 30px;
   transition: transform 0.3s;
-}
+} */
 
 .open {
   transform: rotate(45deg);
