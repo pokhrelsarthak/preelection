@@ -26,7 +26,7 @@ const Login = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    axios.get(`http://localhost:8080/signup/all`).then((respo) => {
+    axios.get(`http://3.139.7.113:8080/electionprefinal/signup/all`).then((respo) => {
         const responseData = respo.data;
         const enteredUsername = username; // Replace with the username entered by the user
         const enteredPassword = password; // Replace with the password entered by the user

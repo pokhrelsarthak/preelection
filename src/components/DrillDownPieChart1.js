@@ -36,7 +36,7 @@ const DrillDownPieChart1 = (props) => {
   let cnt = 0;
   // 2nd level data fetching
   const fetchData = (start,end) => {
-    axios.get(`http://localhost:8080/election/slice/${start}/${end}`).then((respo) => {
+    axios.get(`http://3.139.7.113:8080/electionprefinal/election/slice/${start}/${end}`).then((respo) => {
       // http://localhost:8080/cabinet/ministers
       const response = respo.data;
       const ranges2 = [];
@@ -61,7 +61,7 @@ const DrillDownPieChart1 = (props) => {
   // 3rd level data fetching
   const fetchData2 = (val) =>  {
     if (level === 2){
-      axios.get(`http://localhost:8080/election/slicesecond/${val}`)
+      axios.get(`http://3.139.7.113:8080/electionprefinal/election/slicesecond/${val}`)
       .then((response) => {
         // console.log('Axios response:', response.data);
         const ranges3 = [];

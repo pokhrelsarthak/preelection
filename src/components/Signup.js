@@ -146,7 +146,7 @@ const Signup = () => {
     };
 
     axios
-      .post('http://localhost:8080/signup/save', signupData)
+      .post('http://3.139.7.113:8080/electionprefinal/signup/save', signupData)
       .then(response => {
         console.log('Response:', response.data);
         alert('User Added');

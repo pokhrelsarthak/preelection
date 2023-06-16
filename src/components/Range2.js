@@ -18,7 +18,7 @@ export default function Range2() {
   const fetchrange2 = (start,end) => {
     
     // setIsLoading(true); 
-    axios.get(`http://localhost:8080/election/constrange/${start}/${end}`).then((response) => {
+    axios.get(`hhttp://3.139.7.113:8080/electionprefinal/election/constrange/${start}/${end}`).then((response) => {
       const responseData = response.data;
       setData(responseData);
       const a = responseData.length;

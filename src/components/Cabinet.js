@@ -6,7 +6,7 @@ export default function Cabinet() {
         fetchDatas();
       }, []);
     const fetchDatas = () =>  {
-        axios.get(`http://localhost:8080/cabinet/ministers`)
+        axios.get(`http://3.139.7.113:8080/electionprefinal/cabinet/ministers`)
         .then((response) => {
             const k = response.data;
             setArr(k);
