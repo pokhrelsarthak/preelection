@@ -2,7 +2,8 @@ trigger:
   branches:
     include:
       - main  # Specify the main branch where changes will trigger this pipeline
-
+pool:
+ name: 'azureagent'
 
 jobs:
 - job: BuildAndNotify
