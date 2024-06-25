@@ -1,21 +1,26 @@
+trigger:
+  branches:
+    include:
+      - main  # Specify the main branch where changes will trigger this pipeline
+
+pool:
+  vmImage: 'ubuntu-latest'
+
 jobs:
 - job: BuildAndNotify
   displayName: 'Build and Notify on Failure'
-  pool:
-    vmImage: 'ubuntu-latest'
-
   steps:
-  - checkout: self 
+  - checkout: self  # Fetches the repository where the pipeline is triggered
+
   - task: NodeTool@0
     inputs:
       versionSpec: '10.x'
     displayName: 'Install Node.js'
 
-  - script: npm install
-    displayName: 'npm install'
-
-  - script: npm run build
-    displayName: 'npm run build'
+  - script: |
+      npm install
+      npm run build
+    displayName: 'npm install and build'
 
   - task: PowerShell@2
     displayName: 'Send Email Notification'
@@ -23,12 +28,11 @@ jobs:
     inputs:
       targetType: 'inline'
       script: |
-        $emailFrom = "sarthakpokhrel8example.com"
-        $emailTo = "sarthakpokhrel3@email.com"
-        $smtpServer = "smtp.gmail.com"  # Replace with your SMTP server address
-        $smtpUsername = "sarthakpokhrel8"  # Replace with your SMTP username (if required)
-        $smtpPassword = "esvpvqnydnstlryw"
-
+        $emailFrom = "your.email@example.com"
+        $emailTo = "recipient@email.com"
+        $smtpServer = "smtp.yourserver.com"  # Replace with your SMTP server address
+        $smtpUsername = "your.smtp.username"  # Replace with your SMTP username (if required)
+        $smtpPassword = "your.smtp.password"  # Replace with your SMTP password (if required)
 
         $subject = "Azure Pipeline Build Failed"
         $body = "The build for branch $(Build.SourceBranch) in pipeline $(System.DefinitionName) has failed. Check details at $(System.CollectionUri)$(System.TeamProject)/_build/results?buildId=$(Build.BuildId)"
