@@ -1,10 +1,10 @@
 trigger:
   branches:
     include:
-      - main  # Specify the main branch where changes will trigger this pipeline
-
+      - main 
+      
 pool:
- name: 'azureagent'  # Use ubuntu-latest image for the pool
+ name: 'azureagent'
 
 jobs:
 - job: BuildAndNotify
@@ -30,43 +30,3 @@ jobs:
       sudo apt-get update
       sudo apt-get install -y powershell
     displayName: 'Install PowerShell Core'
-
-  - task: PowerShell@2
-    displayName: 'Send Email Notification on Failure'
-    condition: failed()  # Send email only on failure
-    inputs:
-      targetType: 'inline'
-      script: |
-        $emailFrom = "sarthakpokhrel8@gmail.com"
-        $emailTo = "sarthakpokhrel3@gmail.com"
-        $smtpServer = "smtp.gmail.com"  # Replace with your SMTP server address
-        $smtpUsername = "sarthakpokhrel8@gmail.com"  # Replace with your SMTP username (if required)
-        $smtpPassword = "esvpvqnydnstlryw"
-
-        $subject = "Azure Pipeline Build Failed"
-        $body = "The build for branch $(Build.SourceBranch) in pipeline $(System.DefinitionName) has failed. Check details at $(System.CollectionUri)$(System.TeamProject)/_build/results?buildId=$(Build.BuildId)"
-
-        $smtpClient = New-Object Net.Mail.SmtpClient($smtpServer, 587)
-        $smtpClient.EnableSsl = $true
-        $smtpClient.Credentials = New-Object System.Net.NetworkCredential($smtpUsername, $smtpPassword)
-        $smtpClient.Send($emailFrom, $emailTo, $subject, $body)
-
-  - task: PowerShell@2
-    displayName: 'Send Email Notification on Success'
-    condition: succeeded()  # Send email only on success
-    inputs:
-      targetType: 'inline'
-      script: |
-        $emailFrom = "sarthakpokhrel8@gmail.com"
-        $emailTo = "sarthakpokhrel3@gmail.com"
-        $smtpServer = "smtp.gmail.com"  # Replace with your SMTP server address
-        $smtpUsername = "sarthakpokhrel8@gmail.com"  # Replace with your SMTP username (if required)
-        $smtpPassword = "esvpvqnydnstlryw"  # Replace with your SMTP password (if required)
-
-        $subject = "Azure Pipeline Build Succeeded"
-        $body = "The build for branch $(Build.SourceBranch) in pipeline $(System.DefinitionName) has succeeded. Check details at $(System.CollectionUri)$(System.TeamProject)/_build/results?buildId=$(Build.BuildId)"
-
-        $smtpClient = New-Object Net.Mail.SmtpClient($smtpServer, 587)
-        $smtpClient.EnableSsl = $true
-        $smtpClient.Credentials = New-Object System.Net.NetworkCredential($smtpUsername, $smtpPassword)
-        $smtpClient.Send($emailFrom, $emailTo, $subject, $body)
