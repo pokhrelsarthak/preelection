@@ -2,14 +2,16 @@ trigger:
   branches:
     include:
       - main  # Specify the main branch where changes will trigger this pipeline
+
 pool:
- name: 'azureagent'
+ name: 'azureagent'  # Use ubuntu-latest image for the pool
 
 jobs:
 - job: BuildAndNotify
   displayName: 'Build and Notify on Failure'
   steps:
-  - checkout: self  
+  - checkout: self
+
   - task: NodeTool@0
     inputs:
       versionSpec: '10.x'
@@ -20,6 +22,16 @@ jobs:
       npm run build
     displayName: 'npm install and build'
 
+  - script: |
+      sudo apt-get update
+      sudo apt-get install -y wget apt-transport-https software-properties-common
+      wget -q https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb
+      sudo dpkg -i packages-microsoft-prod.deb
+      sudo apt-get update
+      sudo apt-get install -y powershell
+    displayName: 'Install PowerShell Core'
+    condition: failed()  # Only install if previous steps failed
+
   - task: PowerShell@2
     displayName: 'Send Email Notification'
     condition: failed()  # Send email only on failure
@@ -29,13 +41,13 @@ jobs:
         $emailFrom = "sarthakpokhrel8@gmail.com"
         $emailTo = "sarthakpokhrel3@gmail.com"
         $smtpServer = "smtp.gmail.com"  # Replace with your SMTP server address
-        $smtpUsername = "sarthakpokhrel8"  # Replace with your SMTP username (if required)
-        $smtpPassword = "esvpvqnydnstlryw" 
+        $smtpUsername = "sarthakpokhrel8@gmail.com"  # Gmail username (full email address)
+        $smtpPassword = "esvpvqnydnstlryw"
 
         $subject = "Azure Pipeline Build Failed"
         $body = "The build for branch $(Build.SourceBranch) in pipeline $(System.DefinitionName) has failed. Check details at $(System.CollectionUri)$(System.TeamProject)/_build/results?buildId=$(Build.BuildId)"
 
-        $smtpClient = New-Object Net.Mail.SmtpClient($smtpServer)
+        $smtpClient = New-Object Net.Mail.SmtpClient($smtpServer, 587)
         $smtpClient.EnableSsl = $true
         $smtpClient.Credentials = New-Object System.Net.NetworkCredential($smtpUsername, $smtpPassword)
         $smtpClient.Send($emailFrom, $emailTo, $subject, $body)
