@@ -3,15 +3,12 @@ trigger:
     include:
       - main  # Specify the main branch where changes will trigger this pipeline
 
-pool:
-  vmImage: 'ubuntu-latest'
 
 jobs:
 - job: BuildAndNotify
   displayName: 'Build and Notify on Failure'
   steps:
-  - checkout: self  # Fetches the repository where the pipeline is triggered
-
+  - checkout: self  
   - task: NodeTool@0
     inputs:
       versionSpec: '10.x'
