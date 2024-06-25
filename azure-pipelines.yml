@@ -1,43 +1,48 @@
-# Node.js
-# Build a general Node.js project with npm.
-# Add steps that analyze code, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+jobs:
+- job: BuildAndTest
+  displayName: 'Build and Test'
+  pool:
+    vmImage: 'ubuntu-latest'
+  steps:
+  - script: npm install
+    displayName: 'npm install'
 
-trigger:
-- main
+  - script: npm run build
+    displayName: 'npm run build'
 
-pool:
-  vmImage: ubuntu-latest
+  - script: npm test
+    displayName: 'npm test'
 
-steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '10.x'
-  displayName: 'Install Node.js'
+- job: Deploy
+  displayName: 'Deploy to Production'
+  dependsOn: BuildAndTest
+  pool:
+    vmImage: 'ubuntu-latest'
+  steps:
+  - script: echo 'Deploying to production...'
+    displayName: 'Deploy'
 
-- script: |
-    npm install
-    npm run build
-  displayName: 'npm install and build'
+- job: SendNotification
+  displayName: 'Send Email Notification on Build Failure'
+  dependsOn: [BuildAndTest, Deploy]  # Ensure it runs after other jobs
+  pool:
+    vmImage: 'ubuntu-latest'
+  condition: failed()
+  steps:
+  - task: PowerShell@2
+    inputs:
+      targetType: 'inline'
+      script: |
+        $emailFrom = "sarthakpokhrel8@example.com"
+        $emailTo = "sarthakpokhrel3@gmail.com"
+        $smtpServer = "smtp.gmail.com"  # Replace with your SMTP server address
+        $smtpUsername = "sarthakpokhrel8"  # Replace with your SMTP username (if required)
+        $smtpPassword = "esvpvqnydnstlryw"
 
-- task: PowerShell@2
-  inputs:
-    targetType: 'inline'
-    script: |
-      $emailFrom = "sarthakpokhrel8@example.com"
-      $emailTo = "sarthakpokhrel3@gmail.com"
-      $smtpServer = "smtp.gmail.com"  # Replace with your SMTP server address
-      $smtpUsername = "your.smtp.username"  # Replace with your SMTP username (if required)
-      $smtpPassword = "your.smtp.password"  # Replace with your SMTP password (if required)
+        $subject = "Azure Pipeline Build Failed"
+        $body = "The build for branch $(Build.SourceBranch) in pipeline $(System.DefinitionName) has failed. Check details at $(System.CollectionUri)$(System.TeamProject)/_build/results?buildId=$(Build.BuildId)"
 
-      $subject = "Azure Pipeline Build $(if($env:Build_Status -eq 'Succeeded') {'Succeeded'} else {'Failed'})"
-      $body = "The build for branch $(Build.SourceBranch) in pipeline $(System.DefinitionName) has $(if($env:Build_Status -eq 'Succeeded') {'succeeded'} else {'failed'})."
-
-      # Create mail message
-      $mailMessage = New-Object System.Net.Mail.MailMessage($emailFrom, $emailTo, $subject, $body)
-
-      # Create SMTP client
-      $smtp = New-Object Net.Mail.SmtpClient($smtpServer)
-      $smtp.Send($mailMessage)
-      
-  condition: always()
+        $smtpClient = New-Object Net.Mail.SmtpClient($smtpServer)
+        $smtpClient.EnableSsl = $true
+        $smtpClient.Credentials = New-Object System.Net.NetworkCredential($smtpUsername, $smtpPassword)
+        $smtpClient.Send($emailFrom, $emailTo, $subject, $body)
