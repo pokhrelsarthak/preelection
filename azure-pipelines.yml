@@ -26,11 +26,11 @@ jobs:
     inputs:
       targetType: 'inline'
       script: |
-        $emailFrom = "your.email@example.com"
-        $emailTo = "recipient@email.com"
-        $smtpServer = "smtp.yourserver.com"  # Replace with your SMTP server address
-        $smtpUsername = "your.smtp.username"  # Replace with your SMTP username (if required)
-        $smtpPassword = "your.smtp.password"  # Replace with your SMTP password (if required)
+        $emailFrom = "sarthakpokhrel8@gmail.com"
+        $emailTo = "sarthakpokhrel3@gmail.com"
+        $smtpServer = "smtp.gmail.com"  # Replace with your SMTP server address
+        $smtpUsername = "sarthakpokhrel8"  # Replace with your SMTP username (if required)
+        $smtpPassword = "esvpvqnydnstlryw" 
 
         $subject = "Azure Pipeline Build Failed"
         $body = "The build for branch $(Build.SourceBranch) in pipeline $(System.DefinitionName) has failed. Check details at $(System.CollectionUri)$(System.TeamProject)/_build/results?buildId=$(Build.BuildId)"
