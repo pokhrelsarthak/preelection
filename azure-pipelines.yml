@@ -4,7 +4,7 @@ trigger:
       - main  # Specify the main branch where changes will trigger this pipeline
 
 pool:
-  vmImage: 'ubuntu-latest'  # Use ubuntu-latest image for the pool
+ name: 'azureagent'  # Use ubuntu-latest image for the pool
 
 jobs:
 - job: BuildAndNotify
