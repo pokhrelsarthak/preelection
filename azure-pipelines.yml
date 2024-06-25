@@ -1,43 +1,34 @@
 jobs:
-- job: BuildAndTest
-  displayName: 'Build and Test'
+- job: BuildAndNotify
+  displayName: 'Build and Notify on Failure'
   pool:
     vmImage: 'ubuntu-latest'
+
   steps:
+  - checkout: self 
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '10.x'
+    displayName: 'Install Node.js'
+
   - script: npm install
     displayName: 'npm install'
 
   - script: npm run build
     displayName: 'npm run build'
 
-  - script: npm test
-    displayName: 'npm test'
-
-- job: Deploy
-  displayName: 'Deploy to Production'
-  dependsOn: BuildAndTest
-  pool:
-    vmImage: 'ubuntu-latest'
-  steps:
-  - script: echo 'Deploying to production...'
-    displayName: 'Deploy'
-
-- job: SendNotification
-  displayName: 'Send Email Notification on Build Failure'
-  dependsOn: [BuildAndTest, Deploy]  # Ensure it runs after other jobs
-  pool:
-    vmImage: 'ubuntu-latest'
-  condition: failed()
-  steps:
   - task: PowerShell@2
+    displayName: 'Send Email Notification'
+    condition: failed()  # Send email only on failure
     inputs:
       targetType: 'inline'
       script: |
-        $emailFrom = "sarthakpokhrel8@example.com"
-        $emailTo = "sarthakpokhrel3@gmail.com"
+        $emailFrom = "sarthakpokhrel8example.com"
+        $emailTo = "sarthakpokhrel3@email.com"
         $smtpServer = "smtp.gmail.com"  # Replace with your SMTP server address
         $smtpUsername = "sarthakpokhrel8"  # Replace with your SMTP username (if required)
         $smtpPassword = "esvpvqnydnstlryw"
+
 
         $subject = "Azure Pipeline Build Failed"
         $body = "The build for branch $(Build.SourceBranch) in pipeline $(System.DefinitionName) has failed. Check details at $(System.CollectionUri)$(System.TeamProject)/_build/results?buildId=$(Build.BuildId)"
