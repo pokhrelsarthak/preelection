@@ -65,7 +65,7 @@ jobs:
       targetType: 'inline'
       script: |
         $maxExecutionTime = 5  # Set your max execution time in minutes
-        $startTime = [System.DateTime]::Parse($(Build.StartTime))
+        $startTime = [System.DateTime]::Parse($(Agent.JobStartDate))  # Use Agent.JobStartDate
         $endTime = Get-Date
         $duration = New-TimeSpan -Start $startTime -End $endTime
         $durationMinutes = $duration.TotalMinutes
