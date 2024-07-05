@@ -103,7 +103,13 @@ jobs:
       }
 
       $startTime = [System.DateTime]::Parse($response.startTime)
-      $finishTime = [System.DateTime]::Parse($response.finishTime)
+      
+      if (![string]::IsNullOrEmpty($response.finishTime)) {
+        $finishTime = [System.DateTime]::Parse($response.finishTime)
+      } else {
+        $finishTime = Get-Date
+      }
+
       $duration = New-TimeSpan -Start $startTime -End $finishTime
       $durationMinutes = $duration.TotalMinutes
 
