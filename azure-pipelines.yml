@@ -39,35 +39,19 @@ jobs:
       sudo apt-get install -y powershell
     displayName: 'Install PowerShell Core'
 
-  # - task: PowerShell@2
-  #   condition: failed()  # Send email only on failure
-  #   inputs:
-  #     targetType: 'inline'
-  #     script: |
-  #       $emailFrom = "sarthakpokhrel8@gmail.com"
-  #       $emailTo = "sarthakpokhrel3@gmail.com"
-  #       $smtpServer = "smtp.gmail.com"
-  #       $smtpUsername = "sarthakpokhrel8@gmail.com"
-  #       $smtpPassword = "esvpvqnydnstlryw"
-
-  #       $subject = "Azure Pipeline Build Failed"
-  #       $body = "The build for branch $(Build.SourceBranch) in pipeline $(System.DefinitionName) has failed. Check details at $(System.CollectionUri)$(System.TeamProject)/_build/results?buildId=$(Build.BuildId)"
-
-  #       $smtpClient = New-Object Net.Mail.SmtpClient($smtpServer, 587)
-  #       $smtpClient.EnableSsl = $true
-  #       $smtpClient.Credentials = New-Object System.Net.NetworkCredential($smtpUsername, $smtpPassword)
-  #       $smtpClient.Send($emailFrom, $emailTo, $subject, $body)
-  #   displayName: 'Send Email Notification on Failure'
-
   - task: PowerShell@2
     condition: always()
     inputs:
       targetType: 'inline'
       script: |
-        $maxExecutionTime = 5  # Set your max execution time in minutes
-        $startTime = [System.DateTime]::Parse($(Agent.JobStartDate))  # Use Agent.JobStartDate
-        $endTime = Get-Date
-        $duration = New-TimeSpan -Start $startTime -End $endTime
+        $url = "$(System.TeamFoundationCollectionUri)$(System.TeamProject)/_apis/build/builds/$(Build.BuildId)?api-version=6.0"
+        $response = Invoke-RestMethod -Uri $url -Headers @{
+          "Authorization" = "Bearer $(System.AccessToken)"
+        }
+
+        $startTime = [System.DateTime]::Parse($response.startTime)
+        $finishTime = [System.DateTime]::Parse($response.finishTime)
+        $duration = New-TimeSpan -Start $startTime -End $finishTime
         $durationMinutes = $duration.TotalMinutes
 
         if ($durationMinutes -gt $maxExecutionTime) {
