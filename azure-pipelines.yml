@@ -64,7 +64,7 @@ jobs:
     inputs:
       targetType: 'inline'
       script: |
-        $maxExecutionTime = 60  # Set your max execution time in minutes
+        $maxExecutionTime = 1  # Set your max execution time in minutes
         if ($(Build.DurationInMinutes) -gt $maxExecutionTime) {
           $emailFrom = "sarthakpokhrel8@gmail.com"
           $emailTo = "sarthakpokhrel3@gmail.com"
